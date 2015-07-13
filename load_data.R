@@ -1,5 +1,5 @@
 # first install readxl if you don't have it and then load the library
-if (!require("readxl")) install.packages("readxl")
+## if (!require("readxl")) install.packages("readxl") # I don't think this works
 library(readxl)
 
 # load the data (only the raw answers)
