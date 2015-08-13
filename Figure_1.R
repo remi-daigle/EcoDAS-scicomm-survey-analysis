@@ -4,3 +4,7 @@
 # - data from Q8
 # - scicomm of ~ equal rank to in-department curriculum
 # - also needs statistics
+
+# get the right data
+require(dplyr)
+fig1_data <- survey_data %>% select(starts_with("Q8"))
