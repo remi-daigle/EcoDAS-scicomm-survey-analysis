@@ -21,7 +21,9 @@ fig3_recoded[fig3_recoded=="Yearly or less"] <- "Infrequently"
 
 jpeg('fig3.jpg')
 layout(matrix(c(1:6),ncol=2))
+#loop for type
 for(i in unique(fig3_recoded$type)){
+    #summarize each subtype within type
     fig3_summary <- spread(data.frame(with(fig3_recoded, table(paste(type,subtype,sep="_"), value))),key=value,value=Freq)
     fig3_summary <- fig3_summary %>% 
         separate(Var1,sep="_",c('type','subtype')) %>% 
@@ -30,9 +32,13 @@ for(i in unique(fig3_recoded$type)){
         summarize(mean_Frequently=Frequently/nrow(survey_data)*100,
                   mean_Infrequently=Infrequently/nrow(survey_data)*100)
     
+    #re-order
     fig3_summary <- fig3_summary[order(fig3_summary$mean_Infrequently,decreasing = TRUE),]
+    
+    #create labels
     plot_labels <- as.character(fig3_summary$subtype)
     
+    #plot
     barplot(t(as.matrix(fig3_summary[,-1])),
             beside=T,
             legend = c("Frequently","Infrequently"),

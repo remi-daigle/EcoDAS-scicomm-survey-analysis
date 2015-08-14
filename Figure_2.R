@@ -46,6 +46,7 @@ fig2b_recoded[fig2b_recoded=="Weekly"] <- "Frequently"
 fig2b_recoded[fig2b_recoded=="Monthly"] <- "Infrequently"
 fig2b_recoded[fig2b_recoded=="Yearly or less"] <- "Infrequently"
 
+#summarize each type by averaging subtypes
 fig2b_summary <- spread(data.frame(with(fig2b_recoded, table(paste(type,subtype,sep="_"), value))),key=value,value=Freq)
 fig2b_summary <- fig2b_summary %>% 
     separate(Var1,sep="_",c('type','subtype')) %>% 
@@ -53,9 +54,13 @@ fig2b_summary <- fig2b_summary %>%
     summarize(mean_Frequently=mean(Frequently)/nrow(survey_data)*100,
               mean_Infrequently=mean(Infrequently)/nrow(survey_data)*100)
 
+#re-order
 fig2b_summary <- fig2b_summary[c(4,1,5,2,6,3),]
+
+#create labels
 plot_labels <- sub(".+_.+_","",as.character(fig2b_summary$type))
 
+#plot
 jpeg('fig2b.jpg')
 barplot(t(as.matrix(fig2b_summary[,-1])),
         beside=T,
