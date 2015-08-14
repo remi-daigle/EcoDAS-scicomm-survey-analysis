@@ -4,6 +4,7 @@ library(readxl)
 
 # load the data (only the raw answers)
 survey_data <- read_excel("EcoDAS_SciCommSurvey_EWC.xls",col_names=FALSE)[3:32,1:133]
+survey_data <- survey_data[survey_data$X1!= "4007107001.000000",] # remove respondent with all NA's
 demo_data <- read_excel("EcoDAS_SciCommSurvey_EWC.xls",col_names=FALSE)[37:65,134:150]
 
 # load the questions
