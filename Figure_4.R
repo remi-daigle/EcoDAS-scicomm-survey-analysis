@@ -37,6 +37,7 @@ plot_labels <- as.character(fig4_summary$type)
 legend_labels <- names(fig4_summary[,-1])
 
 #plot
+jpeg('fig4.jpg')
 barplot(t(as.matrix(fig4_summary[,-1])),
         legend = legend_labels,
         args.legend = list(x="topright",bty='n'),
@@ -45,3 +46,4 @@ barplot(t(as.matrix(fig4_summary[,-1])),
         ylim=c(0,100),
         ylab="Percent",
         col=rainbow(6))
+dev.off()
