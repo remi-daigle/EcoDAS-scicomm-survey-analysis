@@ -32,7 +32,6 @@ fig2a_summary <- fig2a_summary[c(4,1,5,2,6,3,7),]
 fig2a_summary$key <- sub(".+_.+_","",as.character(fig2a_summary$key))
 #plot
 jpeg('fig2a.jpg')
-layout(matrix(c(1,2),ncol=2))
 likert(key ~ . , fig2a_summary,
        as.percent=TRUE,
        ylab=NULL,
