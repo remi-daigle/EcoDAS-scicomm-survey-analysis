@@ -27,11 +27,16 @@ fig1_summary <- spread(data.frame(with(fig1_data_long, table(key, value))),key=v
 fig1_summary <- fig1_summary[c(3,7,5,1,2,6,4),]
 #assign labels
 fig1_summary$key <- sub(".+_.+_","",as.character(fig1_summary$key))
+
+#alternate assign labels- to make labels more self-explanatory
+fig1_summary$key <- c("Grants,\nFunding", "Laboratory", "Curriculum\n(In Dept.)", "Science\nComm.", "Educational", "Curriculum\n(Outside Dept.)", "Job,\nInterview") #!!!!!
+
 #plot
 jpeg('fig1.jpg')
 likert(key ~ . , fig1_summary,
        as.percent=TRUE,
        ylab=NULL,
+       xlab="Communication Category", 
        main="Ranking of graduate training")
 
 dev.off()
