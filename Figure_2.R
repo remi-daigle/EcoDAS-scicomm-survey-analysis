@@ -43,8 +43,9 @@ fig2b_recoded <- fig2b_data %>% gather() %>% separate(key,sep="_",c('question','
 # lump frequencies
 fig2b_recoded[fig2b_recoded=="Daily"] <- "Frequently"
 fig2b_recoded[fig2b_recoded=="Weekly"] <- "Frequently"
-fig2b_recoded[fig2b_recoded=="Monthly"] <- "Infrequently"
+fig2b_recoded[fig2b_recoded=="Monthly"] <- "Frequently"  #changed Monthly to be recoded as "Frequently"
 fig2b_recoded[fig2b_recoded=="Yearly or less"] <- "Infrequently"
+fig2b_recoded$value[is.na(fig2b_recoded$value)]<-"Never" #assumes that NAs (blanks) indicate that the activity was never done
 
 #summarize each type by averaging subtypes
 fig2b_summary <- spread(data.frame(with(fig2b_recoded, table(paste(type,subtype,sep="_"), value))),key=value,value=Freq)
@@ -52,7 +53,8 @@ fig2b_summary <- fig2b_summary %>%
     separate(Var1,sep="_",c('type','subtype')) %>% 
     group_by(type) %>% 
     summarize(mean_Frequently=mean(Frequently)/nrow(survey_data)*100,
-              mean_Infrequently=mean(Infrequently)/nrow(survey_data)*100)
+              mean_Infrequently=mean(Infrequently)/nrow(survey_data)*100,
+              mean_Never=mean(Never)/nrow(survey_data)*100))   #calculalting new category for figure 2b
 
 #re-order
 fig2b_summary <- fig2b_summary[c(4,1,5,2,6,3),]
@@ -60,15 +62,19 @@ fig2b_summary <- fig2b_summary[c(4,1,5,2,6,3),]
 #create labels
 plot_labels <- sub(".+_.+_","",as.character(fig2b_summary$type))
 
+#alternate create labels
+plot_labels <- c("Visual\nArts","Oral","Workshop", "Popular\nMedia", "Written", "Social\nMedia")  
+
 #plot
 jpeg('fig2b.jpg')
+par(mar=c(5.1, 4.1, 7.1, 2.1), xpd=TRUE) #allows legend to be outside of plot frame
 barplot(t(as.matrix(fig2b_summary[,-1])),
-        beside=T,
-        legend = c("Frequently","Infrequently"),
-        args.legend = list(x="top",bty='n'),
+        beside=F,  #changed to F to stack bars
+        legend = c("At Least Monthly","Yearly or More", "Never"), #trying out new phrases for legend
+        args.legend = list(x="top",bty='y', title="Frequency", inset=c(0,-0.22)), #positions legend outside of plot, add title to legend
         names=plot_labels,
-        las=3,
-        ylim=c(0,max(fig2b_summary[,-1])*1.5),
+        las=1, #make labels horizonal
+        ylim=c(0,100),
         ylab="Percent")
 
 dev.off()
