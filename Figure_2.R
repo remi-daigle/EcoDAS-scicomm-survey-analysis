@@ -55,10 +55,10 @@ dev.off()
 #### re-code data for 2b ####
 fig2b_recoded <- fig2b_data %>% gather() %>% separate(key,sep="_",c('question','type','subtype'))
 # lump frequencies
-fig2b_recoded[fig2b_recoded=="Daily"] <- "Frequently"
-fig2b_recoded[fig2b_recoded=="Weekly"] <- "Frequently"
-fig2b_recoded[fig2b_recoded=="Monthly"] <- "Frequently"  #changed Monthly to be recoded as "Frequently"
-fig2b_recoded[fig2b_recoded=="Yearly or less"] <- "Infrequently"
+# fig2b_recoded[fig2b_recoded=="Daily"] <- "Frequently"
+# fig2b_recoded[fig2b_recoded=="Weekly"] <- "Frequently"
+# fig2b_recoded[fig2b_recoded=="Monthly"] <- "Frequently"  #changed Monthly to be recoded as "Frequently"
+fig2b_recoded[fig2b_recoded=="Yearly or less"] <- "Yearly"
 fig2b_recoded$value[is.na(fig2b_recoded$value)]<-"Never" #assumes that NAs (blanks) indicate that the activity was never done
 
 #summarize each type by averaging subtypes
@@ -66,8 +66,10 @@ fig2b_summary <- spread(data.frame(with(fig2b_recoded, table(paste(type,subtype,
 fig2b_summary <- fig2b_summary %>% 
     separate(Var1,sep="_",c('type','subtype')) %>% 
     group_by(type) %>% 
-    summarize(mean_Frequently=mean(Frequently)/nrow(survey_data)*100,
-              mean_Infrequently=mean(Infrequently)/nrow(survey_data)*100,
+    summarize(mean_Daily=mean(Daily)/nrow(survey_data)*100,
+              mean_Weekly=mean(Weekly)/nrow(survey_data)*100,
+              mean_Monthly=mean(Monthly)/nrow(survey_data)*100,
+              mean_Yearly=mean(Yearly)/nrow(survey_data)*100,
               mean_Never=mean(Never)/nrow(survey_data)*100)   #calculating new category for figure 2b
 
 #re-order
@@ -77,19 +79,20 @@ fig2b_summary <- fig2b_summary[c(4,1,5,2,6,3),]
 plot_labels <- sub(".+_.+_","",as.character(fig2b_summary$type))
 
 #alternate create labels
-plot_labels <- c("Visual\nArts","Oral","Workshop", "Popular\nMedia", "Written", "Social\nMedia")  
+plot_labels <- c("Visual\nArts","Oral","Workshop", "Pop\nMedia", "Written", "Social\nMedia")  
 
 #plot
-jpeg('fig2b.jpg')
-par(mar=c(5.1, 4.1, 7.1, 2.1), xpd=TRUE) #allows legend to be outside of plot frame
+jpeg('fig2b.jpg',,width = 720, height = 480)
+par(mar=c(5.1, 4.1, 4.1, 7.1), xpd=TRUE) #allows legend to be outside of plot frame
 barplot(t(as.matrix(fig2b_summary[,-1])),
         beside=F,  #changed to F to stack bars
-        legend = c("At Least Monthly","Yearly or More", "Never"), #trying out new phrases for legend
-        args.legend = list(x="top",bty='y', title="Frequency", inset=c(0,-0.25)), #positions legend outside of plot, add title to legend
+        legend = c("Daily","Weekly","Monthly","Yearly or less", "Never"), #trying out new phrases for legend
+        args.legend = list(x="right",bty='n', title="Frequency", inset=c(-0.19,0)), #positions legend outside of plot, add title to legend
         names=plot_labels,
         las=1, #make labels horizontal
         ylim=c(0,100),
         ylab="Percent",
         xlab="Communication Category")
+box(bty='o')
 
 dev.off()
