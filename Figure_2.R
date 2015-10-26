@@ -54,7 +54,7 @@ fig2b_summary <- fig2b_summary %>%
     group_by(type) %>% 
     summarize(mean_Frequently=mean(Frequently)/nrow(survey_data)*100,
               mean_Infrequently=mean(Infrequently)/nrow(survey_data)*100,
-              mean_Never=mean(Never)/nrow(survey_data)*100))   #calculalting new category for figure 2b
+              mean_Never=mean(Never)/nrow(survey_data)*100)   #calculating new category for figure 2b
 
 #re-order
 fig2b_summary <- fig2b_summary[c(4,1,5,2,6,3),]
@@ -71,10 +71,11 @@ par(mar=c(5.1, 4.1, 7.1, 2.1), xpd=TRUE) #allows legend to be outside of plot fr
 barplot(t(as.matrix(fig2b_summary[,-1])),
         beside=F,  #changed to F to stack bars
         legend = c("At Least Monthly","Yearly or More", "Never"), #trying out new phrases for legend
-        args.legend = list(x="top",bty='y', title="Frequency", inset=c(0,-0.22)), #positions legend outside of plot, add title to legend
+        args.legend = list(x="top",bty='y', title="Frequency", inset=c(0,-0.25)), #positions legend outside of plot, add title to legend
         names=plot_labels,
-        las=1, #make labels horizonal
+        las=1, #make labels horizontal
         ylim=c(0,100),
-        ylab="Percent")
+        ylab="Percent",
+        xlab="Communication Category")
 
 dev.off()
