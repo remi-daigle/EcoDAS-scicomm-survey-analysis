@@ -28,14 +28,28 @@ posthoc.kruskal.nemenyi.test(value ~ key, data = fig2a_data_long)
 fig2a_summary <- spread(data.frame(with(fig2a_data_long, table(key, value))),key=value,value=Freq)
 #re-order to amke a better looking plot
 fig2a_summary <- fig2a_summary[c(4,1,5,2,6,3,7),]
-#assign labels
-fig2a_summary$key <- sub(".+_.+_","",as.character(fig2a_summary$key))
+# #assign labels
+# fig2a_summary$key <- sub(".+_.+_","",as.character(fig2a_summary$key))
+#alternate assign labels- to make labels more self-explanatory
+fig2a_summary$key <- c("Written", "Oral", "Visual", "Workshop", "Social\nMedia", "Popular\nMedia", "Other") #!!!!!
+
+# re-gather dataframe
+fig2a_summary <- fig2a_summary %>% gather(Rank,Freq,-key)
+
+# factorize Rank so that 1 is on top
+fig2a_summary$Rank <- factor(fig2a_summary$Rank,levels=7:1)
+
+
 #plot
-jpeg('fig2a.jpg')
-likert(key ~ . , fig2a_summary,
+jpeg('fig2a.jpg',width = 720, height = 480)
+likert(key ~  Rank, value='Freq', fig2a_summary,
        as.percent=TRUE,
-       ylab=NULL,
-       main="Ranking of scicomm training")
+       ylab="Percent Relative Ranking\n Low                                    Neutral                                 High",
+       xlab="Science Communication Category",
+       main="Ranking of Science Communication Training",
+       horizontal = FALSE,
+       rightAxis = FALSE,
+       positive.order=T)
 dev.off()
 
 #### re-code data for 2b ####

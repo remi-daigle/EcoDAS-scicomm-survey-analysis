@@ -15,30 +15,38 @@ require(HH)
 fig1_data <- data.frame(survey_data %>% select(starts_with("Q8")))
 
 # do stats on long format data
-fig1_data_long <- fig1_data %>% gather()
-fig1_data_long$value <- suppressWarnings(as.numeric(fig1_data_long$value))
-kruskal.test(value ~ key, data = fig1_data_long)
-posthoc.kruskal.nemenyi.test(value ~ key, data = fig1_data_long)
+fig1_data_long <- fig1_data %>% gather(type,Rank)
+fig1_data_long$Rank <- suppressWarnings(as.numeric(fig1_data_long$Rank))
+kruskal.test(Rank ~ type, data = fig1_data_long)
+posthoc.kruskal.nemenyi.test(Rank ~ type, data = fig1_data_long)
 
 #### make a likert-style plot ####
 #re-organize
-fig1_summary <- spread(data.frame(with(fig1_data_long, table(key, value))),key=value,value=Freq)
-#re-order to amke a better looking plot
+fig1_summary <-  spread(data.frame(with(fig1_data_long, table(type, Rank))),key=Rank,value=Freq)
+#re-order to make a better looking plot
 fig1_summary <- fig1_summary[c(3,7,5,1,2,6,4),]
 #assign labels
-fig1_summary$key <- sub(".+_.+_","",as.character(fig1_summary$key))
+# fig1_summary$type <- sub(".+_.+_","",as.character(fig1_summary$type))
 
 #alternate assign labels- to make labels more self-explanatory
-fig1_summary$key <- c("Grants,\nFunding", "Laboratory", "Curriculum\n(In Dept.)", "Science\nComm.", "Educational", "Curriculum\n(Outside Dept.)", "Job,\nInterview") #!!!!!
+fig1_summary$type <- c("Grants,\nFunding", "Laboratory", "Curriculum\n(In Dept.)", "Science\nComm.", "Educational", "Curriculum\n(Outside Dept.)", "Job,\nInterview") #!!!!!
+
+# re-gather dataframe (This for some aweful reason seems to be the only way to get "Rank" above the legend)
+fig1_summary <- fig1_summary %>% gather(Rank,Freq,-type)
+
+# factorize Rank so that 1 is on top
+fig1_summary$Rank <- factor(fig1_summary$Rank,levels=7:1)
 
 #plot
-jpeg('fig1.jpg')
-likert(key ~ . , fig1_summary,
+jpeg('fig1.jpg',width = 720, height = 480)
+likert(type ~ Rank , value='Freq', data=fig1_summary,
        as.percent=TRUE,
-       ylab=NULL,
+       ylab="Percent Relative Ranking\n Low                                    Neutral                                 High",
        xlab="Communication Category", 
-       main="Ranking of graduate training")
-
+       main="Ranking of Graduate Training",
+       horizontal = FALSE,
+       rightAxis = FALSE,
+       positive.order=T)
 dev.off()
 
 # #### make a normal barplot with mean rank ####
