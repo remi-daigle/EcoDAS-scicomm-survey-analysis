@@ -73,13 +73,13 @@ fig2b_summary <- fig2b_summary %>%
               mean_Never=mean(Never)/nrow(survey_data)*100)   #calculating new category for figure 2b
 
 #re-order
-fig2b_summary <- fig2b_summary[c(4,1,5,2,6,3),]
+fig2b_summary <- fig2b_summary[c(6,1,4,5,3,2),]
 
 #create labels
-plot_labels <- sub(".+_.+_","",as.character(fig2b_summary$type))
+# plot_labels <- sub(".+_.+_","",as.character(fig2b_summary$type))
 
 #alternate create labels
-plot_labels <- c("Visual\nArts","Oral","Workshop", "Pop\nMedia", "Written", "Social\nMedia")  
+plot_labels <- c("Written","Oral","Visual\nArts","Workshop","Social\nMedia","Pop\nMedia")  
 
 #plot
 jpeg('fig2b.jpg',,width = 720, height = 480)
