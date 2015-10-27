@@ -17,6 +17,7 @@ fig4_recoded <- fig4_data
 fig4_recoded[is.na(fig4_data)] <- 0
 fig4_recoded[!is.na(fig4_data)] <- 1
 
+require(tidyr)  #necessary for creating summary
 fig4_summary <- as.data.frame(t(apply(fig4_recoded,2,function(x) sum(as.numeric(x)))))
 fig4_summary <- fig4_summary %>% 
     gather() %>% 
@@ -29,7 +30,7 @@ fig4_summary <- fig4_summary %>%
 unique(fig4_summary$type)
 fig4_summary$type[fig4_summary$type=="oral"]<-"Oral\nn = 24"
 fig4_summary$type[fig4_summary$type=="workshop"]<-"Workshop\nn = 12"
-fig4_summary$type[fig4_summary$type=="popmedia"]<-"Pop\nMedia\nn = 13"
+fig4_summary$type[fig4_summary$type=="popmedia"]<-"Popular\nMedia\nn = 13" 
 fig4_summary$type[fig4_summary$type=="written"]<-"Written\nn = 22"
 fig4_summary$type[fig4_summary$type=="visual"]<-"Visual\nn = 12"
 fig4_summary$type[fig4_summary$type=="socialmedia"]<-"Social\nMedia\nn = 11"
@@ -43,12 +44,12 @@ fig4_summary <- fig4_summary[,c(1,1+order(as.numeric(apply(fig4_summary[,-1],2,s
 
 #create labels
 plot_labels <- as.character(fig4_summary$type)
-legend_labels <- c("Your Univerisity/Institution",
-                   "Self-guided tutorial/training",
-                   "Other",
-                   "Conference/Scientific Society",
+legend_labels <- c("Government",
                    "Another University/Institution",
-                   "Government")
+                   "Conference/Scientific Society",
+                   "Other",
+                   "Self-guided tutorial/training",
+                   "Your Univerisity/Institution")  #revised order
 
 #plot
 jpeg('fig4.jpg')
