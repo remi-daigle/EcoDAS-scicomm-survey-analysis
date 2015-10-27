@@ -107,5 +107,6 @@ for(i in unique(fig3_recoded$type)[c(4,1,5,2,6,3)]){
             ylab="Percent",
             col=c(grey.colors(4),"white"))
     title(i)
+    box(bty='l')
 }
 dev.off()

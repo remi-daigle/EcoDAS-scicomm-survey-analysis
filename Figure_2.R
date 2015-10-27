@@ -92,7 +92,8 @@ barplot(t(as.matrix(fig2b_summary[,-1])),
         las=1, #make labels horizontal
         ylim=c(0,100),
         ylab="Percent",
-        xlab="Communication Category")
-box(bty='o')
+        xlab="Communication Category",
+        col=c(grey.colors(4),"white"))
+box(bty='l')
 
 dev.off()
