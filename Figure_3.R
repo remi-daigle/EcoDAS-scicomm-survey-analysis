@@ -23,7 +23,7 @@ fig3_recoded[fig3_recoded=="Yearly or less"] <- "Yearly"
 unique(fig3_recoded$type)
 fig3_recoded$type[fig3_recoded$type=="oral"]<-"Oral"
 fig3_recoded$type[fig3_recoded$type=="workshop"]<-"Workshop"
-fig3_recoded$type[fig3_recoded$type=="popmedia"]<-"Pop Media"
+fig3_recoded$type[fig3_recoded$type=="popmedia"]<-"Popular Media"
 fig3_recoded$type[fig3_recoded$type=="written"]<-"Written"
 fig3_recoded$type[fig3_recoded$type=="visual"]<-"Visual"
 fig3_recoded$type[fig3_recoded$type=="social"]<-"Social"
