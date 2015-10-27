@@ -79,7 +79,7 @@ fig2b_summary <- fig2b_summary[c(6,1,4,5,3,2),]
 # plot_labels <- sub(".+_.+_","",as.character(fig2b_summary$type))
 
 #alternate create labels
-plot_labels <- c("Written","Oral","Visual\nArts","Workshop","Social\nMedia","Pop\nMedia")  
+plot_labels <- c("Written","Oral","Visual\nArts","Workshop","Social\nMedia","Popular\nMedia")  
 
 #plot
 jpeg('fig2b.jpg',,width = 720, height = 480)
