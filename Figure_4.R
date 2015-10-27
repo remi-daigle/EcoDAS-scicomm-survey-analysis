@@ -52,7 +52,7 @@ legend_labels <- c("Your Univerisity/Institution",
 
 #plot
 jpeg('fig4.jpg')
-par(mar=c(6, 4, 0, 0) + 0.1)
+par(mar=c(6, 4, 1, 0) + 0.1)
 mp <- barplot(t(as.matrix(fig4_summary[,-1])),
         legend = legend_labels,
         args.legend = list(x="topright",bty='n'),
