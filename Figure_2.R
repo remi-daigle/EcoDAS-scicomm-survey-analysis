@@ -61,6 +61,12 @@ fig2b_recoded <- fig2b_data %>% gather() %>% separate(key,sep="_",c('question','
 fig2b_recoded[fig2b_recoded=="Yearly or less"] <- "Yearly"
 fig2b_recoded$value[is.na(fig2b_recoded$value)]<-"Never" #assumes that NAs (blanks) indicate that the activity was never done
 
+# do stats on long format data
+fig2b_stats <- fig2b_recoded
+fig2b_stats$type <- as.factor(fig2b_stats$type)
+kruskal.test(value ~ type, data = fig2b_stats)
+posthoc.kruskal.nemenyi.test(value ~ type, data = fig2b_stats)
+
 #summarize each type by averaging subtypes
 fig2b_summary <- spread(data.frame(with(fig2b_recoded, table(paste(type,subtype,sep="_"), value))),key=value,value=Freq)
 fig2b_summary <- fig2b_summary %>% 
