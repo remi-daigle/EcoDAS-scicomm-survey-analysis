@@ -93,6 +93,13 @@ for(i in unique(fig3_recoded$type)[c(4,1,5,2,6,3)]){
     #remove other and otherspecify from subtype list
     fig3_summary <- fig3_summary[which(fig3_summary$subtype != "other" & fig3_summary$subtype != "otherspecify" &fig3_summary$subtype != "specifyother"), ] #!!
     
+    # do stats on long format data
+    fig3_stats <- fig3_recoded %>% filter(type==i)
+    fig3_stats$subtype <- as.factor(fig3_stats$subtype)
+    print(i)
+    print(kruskal.test(value ~ subtype, data = fig3_stats))
+    print(posthoc.kruskal.nemenyi.test(value ~ subtype, data = fig3_stats))
+    
     #create labels
     plot_labels <- as.character(fig3_summary$subtype)
     
