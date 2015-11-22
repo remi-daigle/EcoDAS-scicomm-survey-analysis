@@ -42,6 +42,17 @@ fig4_summary$type[fig4_summary$type=="socialmedia"]<-"Social\nMedia\nn = 11"
 fig4_summary <- fig4_summary[order(apply(fig4_summary[,-1],1,sum),decreasing = TRUE),]
 fig4_summary <- fig4_summary[,c(1,1+order(as.numeric(apply(fig4_summary[,-1],2,sum))))]
 
+# do stats on summary format data
+fig4_stats <- fig4_recoded %>% 
+    gather() %>% 
+    separate(key, c('question','category','type','subtype'), sep="_") %>% 
+    select(-question,-category)
+fig4_stats$value <- factor(fig4_stats$value)
+mylogit <- glm(value ~ type+subtype, data = fig4_stats, family = "binomial")
+summary(mylogit)
+confint(mylogit)
+
+
 #create labels
 plot_labels <- as.character(fig4_summary$type)
 legend_labels <- c("Government",
