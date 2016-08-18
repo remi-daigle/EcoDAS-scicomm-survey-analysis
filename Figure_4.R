@@ -70,7 +70,9 @@ mp <- barplot(t(as.matrix(fig4_summary[,-1])),
         args.legend = list(x="topright",bty='n'),
         ylim=c(0,50),
         ylab="Total Number of Responses",
-        col=rainbow(6),
+        col=c('#253494','#2c7fb8','#41b6c4','#7fcdbb','#c7e9b4', '#ffffcc'),
+#        col=c('#662506', '#993404','#d95f0e','#fe9929','#fec44f','#ffffd4'),   #alternate color scheme 1: the 70's
+#        col=c('#00441b', '#006d2c','#41ae76','#99d8c9','#ccece6','#f7fcfd'),   #alternate color scheme 2: Green Dream
         axes = FALSE,
         names=rep("",6))
 mtext("Science Communication Category (n = # of individuals)",1,5)
