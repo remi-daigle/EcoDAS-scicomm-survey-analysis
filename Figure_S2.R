@@ -7,7 +7,7 @@
 
 # get the right data
 require(dplyr)
-fig3_data <- survey_data %>% select(starts_with("Q2"),starts_with("Q3"),starts_with("Q4"),starts_with("Q5"),starts_with("Q6"),starts_with("Q7"))
+fig3_data <- survey_data %>% dplyr::select(starts_with("Q2"),starts_with("Q3"),starts_with("Q4"),starts_with("Q5"),starts_with("Q6"),starts_with("Q7"))
 
 
 #### re-code data ####
@@ -63,7 +63,7 @@ fig3_recoded$subtype[fig3_recoded$subtype=="appearvideo"]<-"Appearance\nin\nVide
 fig3_recoded$subtype[fig3_recoded$subtype=="podcast"]<-"Podcast"
 
 
-jpeg('fig3.jpg')
+tiff('figS2.tif',res=1200,width=8.5,height=10,units="in")
 layout(matrix(c(1,1,2:7),ncol=2,byrow=TRUE),heights=c(1,4,4,4))
 par(mar=c(0,0,0,0))
 plot.new()
@@ -112,8 +112,12 @@ for(i in unique(fig3_recoded$type)[c(4,1,5,2,6,3)]){
             las=3,
             ylim=c(0,100),
             ylab="Percent",
-            col=c(grey.colors(4),"white"))
+            col=c('#00441b', '#006d2c','#41ae76','#99d8c9','#ccece6','#f7fcfd'))
     title(i)
     box(bty='l')
 }
 dev.off()
+
+fig <- image_read("figS2.tif")
+info <- image_info(fig)
+image_write(image_scale(fig,paste0(info$width/5,"X",info$height/5)),"figS2_small.png",format='png')
