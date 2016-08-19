@@ -12,26 +12,28 @@
 # load packages
 require(dplyr)
 require(tidyr)
+require(magick)
+
 
 # get the right data
-fig2a_data <- survey_data %>% select(starts_with("Q9"))
-fig2b_data <- survey_data %>% select(starts_with("Q2"),starts_with("Q3"),starts_with("Q4"),starts_with("Q5"),starts_with("Q6"),starts_with("Q7"),-contains("specify"))
+fig2a_data <- survey_data %>% dplyr::select(starts_with("Q9"))
+fig2b_data <- survey_data %>% dplyr::select(starts_with("Q2"),starts_with("Q3"),starts_with("Q4"),starts_with("Q5"),starts_with("Q6"),starts_with("Q7"),-contains("specify"))
 
 # do stats on long format data
 fig2a_data_long <- fig2a_data %>% gather()
 fig2a_data_long$value <- suppressWarnings(as.numeric(fig2a_data_long$value))
-kruskal.test(value ~ key, data = fig2a_data_long)
-posthoc.kruskal.nemenyi.test(value ~ key, data = fig2a_data_long)
+# kruskal.test(value ~ key, data = fig2a_data_long)
+# posthoc.kruskal.nemenyi.test(value ~ key, data = fig2a_data_long)
 
 #### make a likert-style plot for 2a ####
 #re-organize
 fig2a_summary <- spread(data.frame(with(fig2a_data_long, table(key, value))),key=value,value=Freq)
 #re-order to amke a better looking plot
-fig2a_summary <- fig2a_summary[c(4,1,5,2,6,3,7),]
+fig2a_summary <- fig2a_summary[c(7,1,5,6,4,3,2),]
 # #assign labels
 # fig2a_summary$key <- sub(".+_.+_","",as.character(fig2a_summary$key))
 #alternate assign labels- to make labels more self-explanatory
-fig2a_summary$key <- c("Written", "Oral", "Visual", "Workshop", "Social\nMedia", "Popular\nMedia", "Other") #!!!!!
+fig2a_summary$key <- c("Written", "Oral", "Visual\nArts", "Workshop", "Social\nMedia", "Popular\nMedia", "Other") #!!!!!
 
 # re-gather dataframe
 fig2a_summary <- fig2a_summary %>% gather(Rank,Freq,-key)
@@ -41,15 +43,17 @@ fig2a_summary$Rank <- factor(fig2a_summary$Rank,levels=7:1)
 
 
 #plot
-jpeg('fig2a.jpg',width = 720, height = 480)
+tiff('fig2a.tif',res=1200,width=8.5,height=5,units="in")
+
 likert(key ~  Rank, value='Freq', fig2a_summary,
        as.percent=TRUE,
-       ylab="Percent Relative Ranking\n Low                                    Neutral                                 High",
-       xlab="Science Communication Category",
-       main="Ranking of Science Communication Training",
+       ylab="Percent Relative Ranking\n Low                             Neutral                          High",
+       xlab="",
+       main="",
        horizontal = FALSE,
        rightAxis = FALSE,
        positive.order=T)
+
 dev.off()
 
 #### re-code data for 2b ####
@@ -88,7 +92,9 @@ fig2b_summary <- fig2b_summary[c(6,1,4,5,3,2),]
 plot_labels <- c("Written","Oral","Visual\nArts","Workshop","Social\nMedia","Popular\nMedia")  
 
 #plot
-jpeg('fig2b.jpg',,width = 720, height = 480)
+# jpeg('fig2b.jpg',,width = 720, height = 480)
+tiff('fig2b.tif',res=1200,width=8.5,height=5,units="in")
+
 par(mar=c(5.1, 4.1, 4.1, 7.1), xpd=TRUE) #allows legend to be outside of plot frame
 barplot(t(as.matrix(fig2b_summary[,-1])),
         beside=F,  #changed to F to stack bars
@@ -98,8 +104,15 @@ barplot(t(as.matrix(fig2b_summary[,-1])),
         las=1, #make labels horizontal
         ylim=c(0,100),
         ylab="Percent",
-        xlab="Communication Category",
-        col=c(grey.colors(4),"white"))
+        xlab="Science Communication Category",
+        col=c('#00441b', '#006d2c','#41ae76','#99d8c9','#ccece6','#f7fcfd'))
 box(bty='l')
 
 dev.off()
+
+fig2a <- image_read("fig2a.tif")
+fig2b <- image_read("fig2b.tif")
+fig2 <- image_append(c(fig2a,fig2b),stack=T)
+image_write(fig2,"fig2.tif")
+info <- image_info(fig2)
+image_write(image_scale(fig2,paste0(info$width/5,"X",info$height/5)),"fig2_small.png",format='png')
