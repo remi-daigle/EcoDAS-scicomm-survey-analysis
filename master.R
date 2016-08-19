@@ -16,7 +16,7 @@ source('Figure_2.R',echo=TRUE)
 source('Figure_3.R')
 
 #### create figure S2 ####
-# source('Figure_S1.R')
+source('Figure_S1.R')
 
 #### create figure S2 ####
 source('Figure_S2.R')
