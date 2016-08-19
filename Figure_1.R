@@ -10,15 +10,17 @@ require(dplyr)
 require(tidyr)
 require(PMCMR)
 require(HH)
+require(magick)
+
 
 # get the right data
-fig1_data <- data.frame(survey_data %>% select(starts_with("Q8")))
+fig1_data <- data.frame(survey_data %>% dplyr::select(starts_with("Q8")))
 
 # do stats on long format data
 fig1_data_long <- fig1_data %>% gather(type,Rank)
 fig1_data_long$Rank <- suppressWarnings(as.numeric(fig1_data_long$Rank))
-kruskal.test(Rank ~ type, data = fig1_data_long)
-posthoc.kruskal.nemenyi.test(Rank ~ type, data = fig1_data_long)
+# kruskal.test(Rank ~ type, data = fig1_data_long)
+# posthoc.kruskal.nemenyi.test(Rank ~ type, data = fig1_data_long)
 
 #### make a likert-style plot ####
 #re-organize
@@ -38,16 +40,21 @@ fig1_summary <- fig1_summary %>% gather(Rank,Freq,-type)
 fig1_summary$Rank <- factor(fig1_summary$Rank,levels=7:1)
 
 #plot
-jpeg('fig1.jpg',width = 720, height = 480)
+tiff('fig1.tif',res=1200,width=8.5,height=5,units="in")
+
 likert(type ~ Rank , value='Freq', data=fig1_summary,
        as.percent=TRUE,
        ylab="Percent Relative Ranking\n Low                                    Neutral                                 High",
-       xlab="Communication Category", 
+       xlab="Professional Development Training Category", 
        main="Ranking of Graduate Training",
        horizontal = FALSE,
        rightAxis = FALSE,
        positive.order=T)
 dev.off()
+
+fig <- image_read("fig1.tif")
+info <- image_info(fig)
+image_write(image_scale(fig,paste0(info$width/5,"X",info$height/5)),"fig1_small.png",format='png')
 
 # #### make a normal barplot with mean rank ####
 # fig1_summary <- fig1_data_long %>%
