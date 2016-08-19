@@ -65,7 +65,7 @@ fig3_recoded$subtype[fig3_recoded$subtype=="podcast"]<-"Podcast"
 
 tiff('figS2.tif',res=1200,width=8.5,height=10,units="in")
 layout(matrix(c(1,1,2:7),ncol=2,byrow=TRUE),heights=c(1,4,4,4))
-par(mar=c(0,0,0,0))
+par(mar=c(0,0,0,0),cex=0.9)
 plot.new()
 legend("center",
        c("Daily","Weekly","Monthly","Yearly or less", "Never"),
@@ -73,7 +73,7 @@ legend("center",
        bty="n",
        horiz=TRUE)
 #loop for type
-par(mar=c(5, 4, 2, 0) + 0.1)
+par(mar=c(5, 4, 2, 0) + 0.1,cex=0.9)
 for(i in unique(fig3_recoded$type)[c(4,1,5,2,6,3)]){
     #summarize each subtype within type
     fig3_summary <- spread(data.frame(with(fig3_recoded, table(paste(type,subtype,sep="_"), value))),key=value,value=Freq)
@@ -112,6 +112,7 @@ for(i in unique(fig3_recoded$type)[c(4,1,5,2,6,3)]){
             las=3,
             ylim=c(0,100),
             ylab="Percent",
+            mgp=c(3,0.5,0),
             col=c('#00441b', '#006d2c','#41ae76','#99d8c9','#ccece6','#f7fcfd'))
     title(i)
     box(bty='l')
