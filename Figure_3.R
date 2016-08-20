@@ -60,7 +60,7 @@ legend_labels <- c("Government",
                    "Conference/Scientific Society",
                    "Other",
                    "Self-guided tutorial/training",
-                   "Your Univerisity/Institution")  #revised order
+                   "Your University/Institution")  #revised order
 
 #plot
 require(RColorBrewer)

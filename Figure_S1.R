@@ -5,6 +5,7 @@
 # load packages (install these if you don't have them)
 require(dplyr)
 require(tidyr)
+require(magick)
 
 # get the right data
 figS1_data <- data.frame(demo_data %>% dplyr::select(starts_with("Q25")))
@@ -24,24 +25,24 @@ figS1_summary <- figS1_summary[c(6,7,3,9,10,4,8,5,2,1), ]
 figS1_summary
 
 #alternate assign labels- to make labels more self-explanatory
-figS1_summary$type <- c('High School\nteaching',
+figS1_summary$type <- c('High School teaching',
                         'Industry',
                         'Entrepreneurship',
                         'Other',
-                        'Science\ncommunication',
-                        'Government -\nPolicy',
-                        'Non-governmental\norganization',
-                        'Government -\nResearch',
-                        'Academia -\nTeaching',
-                        'Academia -\nResearch')
+                        'Science communication',
+                        'Government - Policy',
+                        'Non-governmental organization',
+                        'Government - Research',
+                        'Academia - Teaching',
+                        'Academia - Research')
 
 # make count numeric
 figS1_summary$counts <- as.numeric(figS1_summary$counts)
 
 #plot
-tiff('figS1.tif',res=1200,width=3.5,height=7,units="in")
+tiff('figS1.tif',res=1200,width=8.5,height=4,units="in")
 
-par(mar=c(5.1, 8.1, 0.1, 0.6),cex=0.9)
+par(mar=c(5.1, 15.1, 0.1, 0.6),cex=0.9)
 barplot(figS1_summary$counts,
         horiz=T,
         names.arg = figS1_summary$type,
