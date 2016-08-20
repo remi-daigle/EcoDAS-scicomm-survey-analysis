@@ -69,7 +69,7 @@ par(mar=c(0,0,0,0),cex=0.9)
 plot.new()
 legend("center",
        c("Daily","Weekly","Monthly","Yearly or less", "Never"),
-       fill=c(grey.colors(4),"white"),
+       fill=c('#00441b', '#006d2c','#41ae76','#99d8c9','#ccece6','#f7fcfd'),
        bty="n",
        horiz=TRUE)
 #loop for type
