@@ -52,7 +52,9 @@ likert(key ~  Rank, value='Freq', fig2a_summary,
        main="",
        horizontal = FALSE,
        rightAxis = FALSE,
-       positive.order=T)
+       positive.order=T,
+       scales = list(y = list(cex = 1),x = list(cex=1)),
+       auto.key=list(cex=1))
 
 dev.off()
 
@@ -95,7 +97,7 @@ plot_labels <- c("Written","Oral","Visual\nArts","Workshop","Social\nMedia","Pop
 # jpeg('fig2b.jpg',,width = 720, height = 480)
 tiff('fig2b.tif',res=1200,width=8.5,height=5,units="in")
 
-par(mar=c(5.1, 4.1, 4.1, 7.1), xpd=TRUE) #allows legend to be outside of plot frame
+par(mar=c(5.1, 4.1, 0.6, 7.1), xpd=TRUE) #allows legend to be outside of plot frame
 barplot(t(as.matrix(fig2b_summary[,-1])),
         beside=F,  #changed to F to stack bars
         legend = c("Daily","Weekly","Monthly","Yearly or less", "Never"), #trying out new phrases for legend
@@ -110,9 +112,23 @@ box(bty='l')
 
 dev.off()
 
+png('labels.png',res=1200,width=8.5,height=10,units="in",bg='transparent')
+par(mfrow=c(2,1),bg='transparent',mar=c(0,0.2,1,0))
+plot.new()
+mtext('a)',side=3,adj=0,cex=1.1,font=2)
+plot.new()
+mtext('b)',side=3,adj=0,cex=1.1,font=2)
+dev.off()
+
 fig2a <- image_read("fig2a.tif")
 fig2b <- image_read("fig2b.tif")
 fig2 <- image_append(c(fig2a,fig2b),stack=T)
-image_write(fig2,"fig2.tif")
+
 info <- image_info(fig2)
+
+labels <- image_read("labels.png")
+fig2 <- image_composite(fig2, composite_image = labels)
+
+image_write(fig2,"fig2.tif")
+
 image_write(image_scale(fig2,paste0(info$width/5,"X",info$height/5)),"fig2_small.png",format='png')
