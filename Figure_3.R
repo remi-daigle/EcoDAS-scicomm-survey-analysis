@@ -59,7 +59,7 @@ legend_labels <- c("Government",
                    "Another University/Institution",
                    "Conference/Scientific Society",
                    "Other",
-                   "Self-guided tutorial/training",
+                   "Self-guided Tutorial/Training",
                    "Your University/Institution")  #revised order
 
 #plot
@@ -72,10 +72,9 @@ mp <- barplot(t(as.matrix(fig3_summary[,-1])),
         args.legend = list(x="topright",bty='n'),
         ylim=c(0,50),
         ylab="Total Number of Responses",
-        col=brewer.pal(6,'Set2')[c(1,6,2,3,4,5)],     # the ones below are better suited for sequential quantitative data, (i.e. gradients are not ideal for representing categorical data) 
-        # col=c('#253494','#2c7fb8','#41b6c4','#7fcdbb','#c7e9b4', '#ffffcc'),
-#        col=c('#662506', '#993404','#d95f0e','#fe9929','#fec44f','#ffffd4'),   #alternate color scheme 1: the 70's
-#        col=c('#00441b', '#006d2c','#41ae76','#99d8c9','#ccece6','#f7fcfd'),   #alternate color scheme 2: Green Dream
+        col=brewer.pal(6,'Paired')[c(6,5,4,3,2,1)],
+        #col=brewer.pal(6,'RdYlBu')[c(6,1,5,2,4,3)],   #Alternative 1 
+        #col=brewer.pal(6,'Set2')[c(1,6,2,3,4,5)],    #Alternative 2 
         axes = FALSE,
         names=rep("",6))
 mtext("Science Communication Category (n = # of individuals)",1,5)
