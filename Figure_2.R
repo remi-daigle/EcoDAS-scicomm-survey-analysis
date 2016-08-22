@@ -45,7 +45,7 @@ fig2a_summary$Rank <- factor(fig2a_summary$Rank,levels=7:1)
 #plot
 tiff('fig2a.tif',res=1200,width=8.5,height=5,units="in")
 
-likert(key ~  Rank, value='Freq', fig2a_summary,
+likert(key ~  Rank, value='Freq', data=fig2a_summary,
        as.percent=TRUE,
        ylab="Percent Relative Ranking\n Low                             Neutral                          High",
        xlab="",
