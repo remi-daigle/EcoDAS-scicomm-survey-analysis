@@ -49,7 +49,9 @@ likert(type ~ Rank , value='Freq', data=fig1_summary,
        main="Ranking of Graduate Training",
        horizontal = FALSE,
        rightAxis = FALSE,
-       positive.order=T)
+       positive.order=T,
+       scales = list(y = list(cex = 1), x = list(cex=1)),
+       auto.key=list(cex=1))
 dev.off()
 
 fig <- image_read("fig1.tif")
