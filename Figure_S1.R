@@ -40,7 +40,7 @@ figS1_summary$type <- c('High School teaching',
 figS1_summary$counts <- as.numeric(figS1_summary$counts)
 
 #plot
-tiff('figS1.tif',res=1200,width=8.5,height=4,units="in")
+tiff('figS1.tif',res=1200,width=8.5,height=4,units="in", compression = "lzw")
 
 par(mar=c(5.1, 15.1, 0.1, 0.6),cex=0.9)
 barplot(figS1_summary$counts,
