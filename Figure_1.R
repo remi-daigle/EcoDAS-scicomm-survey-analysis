@@ -44,7 +44,7 @@ tiff('fig1.tif',res=600,width=8.5,height=5,units="in", compression = "lzw")
 
 likert(type ~ Rank , value='Freq', data=fig1_summary,
        as.percent=TRUE,
-       ylab="Percent Relative Ranking\n Low                                    Neutral                                 High",
+       ylab="Percent Relative Ranking\n Low                             Neutral                          High",
        xlab="Professional Development Training Category", 
        main=FALSE,
        horizontal = FALSE,
