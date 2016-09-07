@@ -31,7 +31,7 @@ fig1_summary <- fig1_summary[c(3,7,5,1,2,6,4),]
 # fig1_summary$type <- sub(".+_.+_","",as.character(fig1_summary$type))
 
 #alternate assign labels- to make labels more self-explanatory
-fig1_summary$type <- c("Grants,\nFunding", "Laboratory", "Curriculum\n(In Dept.)", "Science\nComm.", "Educational", "Curriculum\n(Outside Dept.)", "Job,\nInterview") #!!!!!
+fig1_summary$type <- c( "Educational", "Science\nComm.", "Job,\nInterview","Curriculum\n(In Dept.)","Curriculum\n(Outside Dept.)", "Laboratory","Grants,\nFunding") #!!!!!
 
 # re-gather dataframe (This for some aweful reason seems to be the only way to get "Rank" above the legend)
 fig1_summary <- fig1_summary %>% gather(Rank,Freq,-type)
