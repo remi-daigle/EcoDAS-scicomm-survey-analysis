@@ -40,7 +40,7 @@ fig1_summary <- fig1_summary %>% gather(Rank,Freq,-type)
 fig1_summary$Rank <- factor(fig1_summary$Rank,levels=7:1)
 
 #plot
-tiff('fig1.tif',res=1200,width=8.5,height=5,units="in", compression = "lzw")
+tiff('fig1.tif',res=600,width=8.5,height=5,units="in", compression = "lzw")
 
 likert(type ~ Rank , value='Freq', data=fig1_summary,
        as.percent=TRUE,

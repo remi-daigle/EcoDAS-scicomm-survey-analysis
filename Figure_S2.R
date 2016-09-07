@@ -63,7 +63,7 @@ fig3_recoded$subtype[fig3_recoded$subtype=="appearvideo"]<-"Appearance\nin\nVide
 fig3_recoded$subtype[fig3_recoded$subtype=="podcast"]<-"Podcast"
 
 
-tiff('figS2.tif',res=1200,width=8.5,height=10,units="in", compression = "lzw")
+tiff('figS2.tif',res=600,width=8.5,height=10,units="in", compression = "lzw")
 layout(matrix(c(1,1,2:7),ncol=2,byrow=TRUE),heights=c(1,4,4,4))
 par(mar=c(0,0,0,0),cex=0.9)
 plot.new()

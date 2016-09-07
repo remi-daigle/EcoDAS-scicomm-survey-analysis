@@ -43,7 +43,7 @@ fig2a_summary$Rank <- factor(fig2a_summary$Rank,levels=7:1)
 
 
 #plot
-tiff('fig2a.tif',res=1200,width=8.5,height=5,units="in", compression = "lzw")
+tiff('fig2a.tif',res=600,width=8.5,height=5,units="in", compression = "lzw")
 
 likert(key ~  Rank, value='Freq', data=fig2a_summary,
        as.percent=TRUE,
@@ -95,7 +95,7 @@ plot_labels <- c("Written","Oral","Visual\nArts","Workshop","Social\nMedia","Pop
 
 #plot
 # jpeg('fig2b.jpg',,width = 720, height = 480)
-tiff('fig2b.tif',res=1200,width=8.5,height=5,units="in", compression = "lzw")
+tiff('fig2b.tif',res=600,width=8.5,height=5,units="in", compression = "lzw")
 
 par(mar=c(5.1, 4.1, 0.6, 7.1), xpd=TRUE) #allows legend to be outside of plot frame
 barplot(t(as.matrix(fig2b_summary[,-1])),
@@ -112,7 +112,7 @@ box(bty='l')
 
 dev.off()
 
-png('labels.png',res=1200,width=8.5,height=10,units="in",bg='transparent')
+png('labels.png',res=600,width=8.5,height=10,units="in",bg='transparent')
 par(mfrow=c(2,1),bg='transparent',mar=c(0,0.2,1,0))
 plot.new()
 mtext('a)',side=3,adj=0,cex=1.1,font=2)

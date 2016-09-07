@@ -65,7 +65,7 @@ legend_labels <- c("Government",
 #plot
 require(RColorBrewer)
 display.brewer.all(5,colorblindFriendly = T)
-tiff('fig3.tif',res=1200,width=8.5,height=5,units="in", compression = "lzw")
+tiff('fig3.tif',res=600,width=8.5,height=5,units="in", compression = "lzw")
 par(mar=c(6, 4, 1, 0) + 0.1)
 mp <- barplot(t(as.matrix(fig3_summary[,-1])),
         legend = legend_labels,
